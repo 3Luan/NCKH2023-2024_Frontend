@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/vi";
-import { readNotificationAPI } from "../services/notificationService";
+import {
+  getUnreadNotificationAPI,
+  readNotificationAPI,
+} from "../services/notificationService";
 
-const NotificationCard = ({ notification, handleClosePopup }) => {
+const NotificationCard = ({ notification, handleClosePopup, setCountNoti }) => {
   moment.locale("vi");
   const [pic, setPic] = useState();
 
@@ -14,11 +17,18 @@ const NotificationCard = ({ notification, handleClosePopup }) => {
         ? notification?.sender?.pic
         : `${process.env.REACT_APP_URL_BACKEND}/${notification?.sender?.pic}`
     );
-  }, []);
+  }, [notification?.sender?.pic]);
 
   const onclickReadOneNotification = async () => {
     if (notification && !notification?.isRead) {
       await readNotificationAPI(notification?._id);
+
+      const data = await getUnreadNotificationAPI();
+      if (data?.code === 0) {
+        setCountNoti(data?.count);
+      } else {
+        setCountNoti(null);
+      }
     }
 
     handleClosePopup();

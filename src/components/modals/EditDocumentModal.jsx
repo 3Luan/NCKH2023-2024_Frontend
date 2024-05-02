@@ -51,7 +51,6 @@ const EditDocumentModal = ({
 
   const getData = async () => {
     const data = await getDocumentUnApprovedDetailByIdAPI(documentId);
-    console.log("data", data);
     setDocument(data?.document);
   };
 

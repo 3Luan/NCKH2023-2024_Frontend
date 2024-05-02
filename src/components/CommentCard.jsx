@@ -120,93 +120,87 @@ const CommentCard = ({ key, comment, deleteComment, postId }) => {
   };
 
   return (
-    <>
-      <div key={key} className="mb-4 py-1 rounded-xl relative">
+    <div key={key} className="mb-4 py-1 rounded-xl">
+      {/* Nội dung bình luận */}
+      <div className="flex mb-2">
+        <Link to={`/profile/${comment?.user?._id}`} className="">
+          <img
+            src={pic}
+            alt="img"
+            className="w-10 h-10 mt-2 rounded-full object-cover min-w-10 min-h-10 mr-1"
+          />
+        </Link>
+
+        <div className="flex flex-col">
+          <div className="bg-slate-100 py-2 px-4 rounded-2xl mt-2">
+            <span className="font-medium pt-1">{comment?.user?.name}</span>
+            <p className="font-small text-sm">{comment?.content}</p>
+          </div>
+          <span className="font-medium pt-1">
+            <span className="text-sm font-normal text-slate-400">
+              {moment(comment?.createdAt).fromNow().charAt(0).toUpperCase() +
+                moment(comment?.createdAt).fromNow().slice(1)}
+            </span>
+            <button
+              onClick={() => toggleReplyForm(comment?._id)}
+              className="text-sm ml-4"
+            >
+              Phản hồi
+            </button>
+          </span>
+        </div>
         {/* Menu */}
         {comment?.user?._id === auth?.id || auth?.isAdmin ? (
-          <>
-            <button
-              className="absolute top-0 right-0 mt-2 mr-2 focus:outline-none"
-              onClick={toggleMenu}
-            >
+          <div className="flex flex-col items-end relative">
+            <button className="px-3 rounded-md" onClick={toggleMenu}>
               <i className="fa-solid fa-ellipsis" />
             </button>
             {menuOpen && (
               <div
                 ref={menuRef}
-                className="absolute top-9 right-0 mt-2 bg-white shadow-md rounded-md z-10"
+                className="absolute right-0 mt-8 bg-white shadow-md rounded-md z-10"
               >
                 <button
                   onClick={onclickDeleteComment}
-                  className="block px-4 py-2 text-gray-800"
+                  className="block px-4 py-2 text-gray-800 w-full text-left"
                 >
                   Xóa bình luận
                 </button>
               </div>
             )}
-          </>
+          </div>
         ) : null}
-
-        {/* Nội dung bình luận */}
-        <div className="flex mb-2">
-          <Link to={`/profile/${comment?.user?._id}`} className="">
-            <img
-              src={pic}
-              alt="img"
-              className="w-10 h-10 mt-2 rounded-full object-cover min-w-10 min-h-10 mr-1"
-            />
-          </Link>
-
-          <div className="flex flex-col">
-            <div className="bg-slate-100 py-2 px-4 rounded-2xl mt-2">
-              <span className="font-medium pt-1">{comment?.user?.name}</span>
-              <p className="font-small text-sm">{comment?.content}</p>
-            </div>
-            <span className="font-medium pt-1">
-              <span className="text-sm font-normal text-slate-400">
-                {moment(comment?.createdAt).fromNow().charAt(0).toUpperCase() +
-                  moment(comment?.createdAt).fromNow().slice(1)}
-              </span>
-              <button
-                onClick={() => toggleReplyForm(comment?._id)}
-                className="text-sm ml-4"
-              >
-                Phản hồi
-              </button>
-            </span>
-          </div>
-        </div>
-
-        {/* Các phản hồi */}
-        {replies.map((item, index) => (
-          <React.Fragment key={index}>
-            {item._id === comment._id && (
-              <div className="ml-14">
-                {item.replies.map((reply, index) => (
-                  <ReplyCard
-                    key={index}
-                    reply={reply}
-                    commentId={comment._id}
-                    deleteReply={deleteReply}
-                  />
-                ))}
-              </div>
-            )}
-          </React.Fragment>
-        ))}
-
-        {/* Form phản hồi */}
-        {auth.auth && showReplyForm && (
-          <div className="ml-11">
-            <CustomCreateReply
-              commentId={comment._id}
-              addReply={addReply}
-              postId={postId}
-            />
-          </div>
-        )}
       </div>
-    </>
+
+      {/* Các phản hồi */}
+      {replies.map((item, index) => (
+        <React.Fragment key={index}>
+          {item._id === comment._id && (
+            <div className="ml-14">
+              {item.replies.map((reply, index) => (
+                <ReplyCard
+                  key={index}
+                  reply={reply}
+                  commentId={comment._id}
+                  deleteReply={deleteReply}
+                />
+              ))}
+            </div>
+          )}
+        </React.Fragment>
+      ))}
+
+      {/* Form phản hồi */}
+      {auth.auth && showReplyForm && (
+        <div className="ml-11">
+          <CustomCreateReply
+            commentId={comment._id}
+            addReply={addReply}
+            postId={postId}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 

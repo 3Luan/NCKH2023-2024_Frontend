@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { getNotificationsAPI } from "../services/notificationService";
+import {
+  getNotificationsAPI,
+  readAllNotificationAPI,
+} from "../services/notificationService";
 import Loading from "./Loading";
 import NotificationCard from "./NotificationCard";
 
-const PopupNotification = ({ menuOpen, setMenuOpen }) => {
+const PopupNotification = ({ menuOpen, setMenuOpen, setCountNoti }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [crPage, setCrPage] = useState(2);
   const [isEnd, setIsEnd] = useState(false);
+  const [isLoadingReadAll, setIsLoadingReadAll] = useState(false);
 
   useEffect(() => {
     if (menuOpen) {
@@ -46,11 +50,21 @@ const PopupNotification = ({ menuOpen, setMenuOpen }) => {
     }
   };
 
+  const onclickReadAllNoti = async () => {
+    setIsLoadingReadAll(true);
+    const data = await readAllNotificationAPI();
+    if (data?.code === 0) {
+      setCountNoti(0);
+      getData();
+    }
+    setIsLoadingReadAll(false);
+  };
+
   return (
     <>
       {menuOpen && (
         <div
-          className="fixed flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed  z-50 flex items-center justify-center bg-black bg-opacity-50"
           onClick={handleClosePopup}
         >
           <div
@@ -61,7 +75,14 @@ const PopupNotification = ({ menuOpen, setMenuOpen }) => {
               <h3 className="text-center font-bold text-xl sm:text-2xl text-gray-800 p-4">
                 Thông báo
               </h3>
-              <button className="inline-flex text-2xl px-2 sm:px-3 py-2 text-gray-800 items-center rounded font-medium">
+              <button
+                className="inline-flex text-2xl px-2 sm:px-3 py-2 text-gray-800 items-center rounded font-medium"
+                onClick={() => {
+                  if (!isLoadingReadAll) {
+                    onclickReadAllNoti();
+                  }
+                }}
+              >
                 <i className="fa-solid fa-circle-check"></i>
               </button>
             </div>
@@ -78,6 +99,7 @@ const PopupNotification = ({ menuOpen, setMenuOpen }) => {
                       key={notification._id}
                       notification={notification}
                       handleClosePopup={handleClosePopup}
+                      setCountNoti={setCountNoti}
                     />
                   ))}
                   {!isEnd && (

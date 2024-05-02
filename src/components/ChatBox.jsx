@@ -432,7 +432,7 @@ const ChatBox = ({
                         m.images.map((image, index) => (
                           <div
                             key={index}
-                            className={`relative flex mb-1 overflow-hidden ${
+                            className={`flex mb-1 overflow-hidden ${
                               m.sender._id === auth.id ? "justify-end" : ""
                             }`}
                           >
@@ -450,7 +450,7 @@ const ChatBox = ({
                         m.files.map((file, index) => (
                           <div
                             key={index}
-                            className={`relative flex mb-1 overflow-hidden ${
+                            className={`flex mb-1 overflow-hidden ${
                               m.sender._id === auth.id ? "justify-end" : ""
                             }`}
                           >

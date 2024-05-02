@@ -27,7 +27,7 @@ export default function CreateChatModal({
       //   console.log(data._id);
       //   setSelectedChat("");
       setSelectedChat(data);
-      console.log(data);
+      // console.log(data);
       setFetchAgain(!fetchAgain);
       onClose();
     } catch (error) {

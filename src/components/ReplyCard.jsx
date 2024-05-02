@@ -18,12 +18,6 @@ const ReplyCard = ({ key, reply, deleteReply, commentId }) => {
   };
 
   useEffect(() => {
-    setPic(
-      reply.user.pic?.includes("googleusercontent.com")
-        ? reply.user.pic
-        : `${process.env.REACT_APP_URL_BACKEND}/${reply.user.pic}`
-    );
-
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpen(false);
@@ -69,7 +63,7 @@ const ReplyCard = ({ key, reply, deleteReply, commentId }) => {
   };
 
   return (
-    <div className="mb-2 bg-white p-1 rounded-xl relative">
+    <div className="mb-2 bg-white p-1 rounded-xl">
       <div className="flex mb-2">
         <Link to={`/profile/${reply?.user?._id}`}>
           <img
@@ -91,33 +85,29 @@ const ReplyCard = ({ key, reply, deleteReply, commentId }) => {
             </span>
           </span>
         </div>
-      </div>
+        {/* Menu */}
+        {reply?.user?._id === auth?.id || auth?.isAdmin ? (
+          <div className="flex flex-col items-end relative">
+            <button className="px-3 rounded-md" onClick={toggleMenu}>
+              <i className="fa-solid fa-ellipsis" />
+            </button>
 
-      {/* Menu */}
-      {reply?.user?._id === auth?.id || auth?.isAdmin ? (
-        <>
-          <button
-            className="absolute top-0 right-0 mt-2 mr-2"
-            onClick={toggleMenu}
-          >
-            <i className="fa-solid fa-ellipsis" />
-          </button>
-
-          {menuOpen && (
-            <div
-              ref={menuRef}
-              className="absolute top-9 right-0 mt-2 bg-white shadow-md rounded-md z-10"
-            >
-              <button
-                onClick={() => onclickDeleteReply()}
-                className="px-4 py-2 text-gray-800"
+            {menuOpen && (
+              <div
+                ref={menuRef}
+                className="absolute right-0 mt-8 bg-white shadow-md rounded-md z-10"
               >
-                Xóa phản hồi
-              </button>
-            </div>
-          )}
-        </>
-      ) : null}
+                <button
+                  onClick={() => onclickDeleteReply()}
+                  className="px-4 py-2 text-gray-800"
+                >
+                  Xóa phản hồi
+                </button>
+              </div>
+            )}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };

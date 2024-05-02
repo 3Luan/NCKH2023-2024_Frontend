@@ -23,8 +23,6 @@ function App() {
     }
   }, []);
 
-  console.log("URL Backend:", `${process.env.REACT_APP_URL_BACKEND}`);
-
   useEffect(() => {
     if (
       auth.auth &&

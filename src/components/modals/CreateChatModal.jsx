@@ -14,9 +14,6 @@ export default function CreateChatModal({ visible, onClose, setChats, chats }) {
   const [searchResult, setSearchResult] = useState([]);
 
   const handleGroup = (userToAdd) => {
-    console.log("userToAdd:", userToAdd);
-    console.log("selectedUsers:", selectedUsers);
-    console.log("Check: ", selectedUsers.includes(userToAdd));
     if (selectedUsers.find((user) => user._id === userToAdd._id)) {
       toast.error("Người này đã được chọn thêm");
       return;

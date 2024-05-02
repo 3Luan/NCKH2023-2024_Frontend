@@ -33,7 +33,6 @@ const SearchFollower = ({ tabActive }) => {
     if (query) {
       setIsLoading(true);
       const data = await searchFollowersAPI(1, query);
-      console.log("data", data);
 
       if (data?.code === 0) {
         setData(data?.data);
