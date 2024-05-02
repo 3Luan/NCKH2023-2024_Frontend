@@ -97,6 +97,12 @@ const ChatBox = ({
           formData.append("files", files[i]);
         }
         const data = await sendMessageAPI(formData);
+
+        if (data?.code === 1) {
+          toast.error(data?.message);
+          return;
+        }
+
         socket.emit("new message", data);
 
         setMessages([...messages, data]);
@@ -624,7 +630,7 @@ const ChatBox = ({
         <div className="h-full flex flex-auto justify-center items-center bg-white rounded-xl">
           <div className="text-center items-center flex flex-col">
             <h3 className="mt-2 text-2xl font-semibold text-gray-900">
-              Select a chat or start a new conversation
+              Chọn đoạn chat để bắt đầu nhắn tin
             </h3>
           </div>
         </div>

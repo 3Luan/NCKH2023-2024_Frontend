@@ -251,23 +251,9 @@ const AppRoutes = () => {
           }
         />
 
-        <Route
-          path="/thong-bao/search"
-          element={
-            <PrivateRoutes>
-              <Home />
-            </PrivateRoutes>
-          }
-        />
+        <Route path="/thong-bao/search" element={<Home />} />
 
-        <Route
-          path="/tin-tuc-su-kien/search"
-          element={
-            <PrivateRoutes>
-              <NewsUTC2 />
-            </PrivateRoutes>
-          }
-        />
+        <Route path="/tin-tuc-su-kien/search" element={<NewsUTC2 />} />
 
         {/* ////////////////Routes cho phần admin ////////////////////*/}
 

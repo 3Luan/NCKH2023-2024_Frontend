@@ -32,6 +32,6 @@ export const addUserGroupChatAPI = (user, selectedChat) => {
 export const removeUserGroupChatAPI = (user, selectedChat) => {
   return backendApi.put(`/api/chat/groupremove`, {
     chatId: selectedChat._id,
-    userId: user._id,
+    userId: user._id || user.id,
   });
 };

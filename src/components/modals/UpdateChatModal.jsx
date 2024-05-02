@@ -85,17 +85,22 @@ export default function UpdateChatModal({
   };
 
   const handleRemove = async (user) => {
-    if (selectedChat.groupAdmin._id !== auth.id && user._id !== auth.id) {
+    if (
+      selectedChat.groupAdmin._id !== auth.id &&
+      ((user?._id && user?._id !== auth.id) ||
+        (user?.id && user?.id !== auth.id))
+    ) {
       toast.error("Chỉ có trưởng nhóm mới có thể xóa người dùng khỏi nhóm");
       return;
     }
-
     try {
       setLoading(true);
 
       const data = await removeUserGroupChatAPI(user, selectedChat);
 
-      user._id === auth.id ? setSelectedChat() : setSelectedChat(data);
+      user._id === auth.id || user.id === auth.id
+        ? setSelectedChat()
+        : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       fetchMessages();
       setLoading(false);
@@ -171,36 +176,44 @@ export default function UpdateChatModal({
         </div>
         <div className="flex flex-wrap items-center justify-center">
           {selectedChat.users.map((u) => (
-            <span
-              id="badge-dismiss-yellow"
-              className="inline-flex items-center px-2 py-1 me-2 mb-2 text-sm font-medium text-yellow-800 bg-yellow-100 rounded dark:bg-yellow-900 dark:text-yellow-300"
-            >
-              {u.name}
-              <button
-                type="button"
-                onClick={() => handleRemove(u)}
-                className="inline-flex items-center p-1 ms-2 text-sm text-yellow-400 bg-transparent rounded-sm hover:bg-yellow-200 hover:text-yellow-900 dark:hover:bg-yellow-800 dark:hover:text-yellow-300"
-                data-dismiss-target="#badge-dismiss-yellow"
-                aria-label="Remove"
-              >
-                <svg
-                  className="w-2 h-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                  />
-                </svg>
-                <span className="sr-only">Remove badge</span>
-              </button>
-            </span>
+            <>
+              {u._id === auth.id ? (
+                <></>
+              ) : (
+                <>
+                  <span
+                    id="badge-dismiss-yellow"
+                    className="inline-flex items-center px-2 py-1 me-2 mb-2 text-sm font-medium text-yellow-800 bg-yellow-100 rounded dark:bg-yellow-900 dark:text-yellow-300"
+                  >
+                    {u.name}
+                    <button
+                      type="button"
+                      onClick={() => handleRemove(u)}
+                      className="inline-flex items-center p-1 ms-2 text-sm text-yellow-400 bg-transparent rounded-sm hover:bg-yellow-200 hover:text-yellow-900 dark:hover:bg-yellow-800 dark:hover:text-yellow-300"
+                      data-dismiss-target="#badge-dismiss-yellow"
+                      aria-label="Remove"
+                    >
+                      <svg
+                        className="w-2 h-2"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                        />
+                      </svg>
+                      <span className="sr-only">Remove badge</span>
+                    </button>
+                  </span>
+                </>
+              )}
+            </>
           ))}
         </div>
         {search && (
@@ -234,7 +247,10 @@ export default function UpdateChatModal({
         )}
         <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
-            onClick={() => handleRemove(auth)}
+            onClick={() => {
+              onClose();
+              handleRemove(auth);
+            }}
             type="button"
             className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
           >
