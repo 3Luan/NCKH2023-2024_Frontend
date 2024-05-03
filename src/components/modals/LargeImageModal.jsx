@@ -15,7 +15,11 @@ const LargeImageModal = ({ urlImage, openModal, setOpenModal }) => {
           ></div>
           <div className="relative rounded-lg ">
             <div className="">
-              <img alt="" className="rounded-3xl max-h-[680px]" />
+              <img
+                src={`${process.env.REACT_APP_URL_BACKEND}/${urlImage}`}
+                alt=""
+                className="rounded-3xl max-h-[680px]"
+              />
             </div>
           </div>
         </div>
