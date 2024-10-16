@@ -1,4 +1,5 @@
 const CustomButton = ({
+  id,
   title,
   containerStyles,
   iconRight,
@@ -8,6 +9,7 @@ const CustomButton = ({
 }) => {
   return (
     <button
+      id={id}
       onClick={onClick}
       type={type || "button"}
       className={`inline-flex items-center text-base ${containerStyles}`}

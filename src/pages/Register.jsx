@@ -211,6 +211,7 @@ const Register = () => {
             </div>
 
             <CustomButton
+              id="register"
               type="submit"
               containerStyles={`mt-4 inline-flex justify-center rounded-md bg-blue-700 px-8 py-3 text-sm font-medium text-white outline-none`}
               title={

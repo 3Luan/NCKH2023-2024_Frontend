@@ -103,6 +103,7 @@ const Login = () => {
               Quên mật khẩu?
             </Link>
             <CustomButton
+              id="login"
               type="submit"
               containerStyles={`inline-flex justify-center rounded-md bg-blue-700 px-8 py-3 text-sm font-medium text-white outline-none`}
               title={
