@@ -31,7 +31,7 @@ const Register = () => {
   };
 
   const isValidPassword = (password) => {
-    if (password.length >= 6 && !/\s/.test(password)) {
+    if (password.length >= 6 && !/\s/.test(password) && password.length <= 12) {
       return true;
     }
     return false;
