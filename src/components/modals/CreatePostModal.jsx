@@ -135,6 +135,7 @@ const CreatePostModal = ({ openModal, setOpenModal, addPost }) => {
               </div>
               <div className="bg-white px-4 rounded-lg my-2">
                 <TextInput
+                  name="title"
                   type="text"
                   styles="w-full"
                   placeholder="Tiêu đề bài viết...."
@@ -143,6 +144,7 @@ const CreatePostModal = ({ openModal, setOpenModal, addPost }) => {
                 />
 
                 <ReactQuill
+                  name="content"
                   ref={quillRef}
                   value={content}
                   onChange={setContent}
@@ -240,6 +242,7 @@ const CreatePostModal = ({ openModal, setOpenModal, addPost }) => {
               {/* footer */}
               <div className="relative p-4 md:p-5 border rounded-t flex justify-end">
                 <button
+                  id="btn_dangbai"
                   type="button"
                   onClick={() => {
                     onclickUpdatePosts();

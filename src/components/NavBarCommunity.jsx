@@ -104,6 +104,7 @@ const NavBarComunity = ({
               </Link>
 
               <button
+                id="btn_createpost"
                 onClick={() => onclickCreatePost()}
                 className="block px-2 py-2 text-gray-800 text-sm font-medium"
                 title="Tạo bài viết mới"
