@@ -144,7 +144,7 @@ const CreatePostModal = ({ openModal, setOpenModal, addPost }) => {
                 />
 
                 <ReactQuill
-                  name="content"
+                  id="content"
                   ref={quillRef}
                   value={content}
                   onChange={setContent}
