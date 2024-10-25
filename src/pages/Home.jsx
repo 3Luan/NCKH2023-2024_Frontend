@@ -59,6 +59,7 @@ const Home = () => {
 
               <div className="flex items-center">
                 <TextInput
+                  name="searchnotification"
                   styles="mb-1 rounded-md border border-gray-200  text-gray-600 focus:shadow-md transition duration-300 ease-in"
                   placeholder="Tìm kiếm thông báo..."
                   onChange={(e) => setKeywordSearch(e.target.value)}
@@ -69,6 +70,7 @@ const Home = () => {
                   }}
                 />
                 <CustomButton
+                  id="btn_searchnotification"
                   title={<i className="fa-solid fa-magnifying-glass"></i>}
                   containerStyles={`bg-[#0444a4] text-white text-xl mt-1 py-3 px-4 rounded-md font-semibold text-sm`}
                   onClick={() => {
