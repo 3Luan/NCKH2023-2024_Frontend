@@ -55,7 +55,7 @@ const Register = () => {
 
         // Kiểm tra mật khẩu
         if (!isValidPassword(password)) {
-          toast.error("Mật khẩu không đủ mạnh");
+          toast.error("Mật khẩu không đủ phù hợp (6-12 ký tự)");
           return;
         }
 
